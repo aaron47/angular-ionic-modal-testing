@@ -1,0 +1,141 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Employee Manager App Ngrx </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-header collapse="condense">
+  <ion-toolbar>
+    <ion-title size="large">Employee Manager App Ngrx</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <ion-button id="open-modal" expand="block">Open Modal</ion-button>
+  </div>
+</ion-content>
+
+<ion-content>
+  <ion-modal trigger="open-modal" (willDismiss)="addEmployee($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()" [strong]="true">Cancel</ion-button>
+          </ion-buttons>
+          <ion-title>Add An Employee</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <form
+          #addEmployeeForm="ngForm"
+          class="container"
+          [formGroup]="employee"
+          (ngSubmit)="confirm()"
+        >
+          <ion-list>
+            <ion-item>
+              <ion-label>Name</ion-label>
+              <ion-input
+                formControlName="name"
+                type="text"
+                placeholder="Enter an employee name"
+              ></ion-input>
+            </ion-item>
+            <ng-container
+              *ngIf="employee.controls['name'].invalid && addEmployeeForm.submitted && showErrors"
+            >
+              <ion-text color="danger">
+                <p class="ion-padding-start">Name is required</p>
+              </ion-text>
+            </ng-container>
+
+            <ion-item>
+              <ion-label>Age</ion-label>
+              <ion-input
+                formControlName="age"
+                type="number"
+                placeholder="Age"
+              ></ion-input>
+            </ion-item>
+            <ng-container
+              *ngIf="employee.controls['age'].invalid && addEmployeeForm.submitted"
+            >
+              <ion-text color="danger">
+                <p class="ion-padding-start">Age is required</p>
+              </ion-text>
+            </ng-container>
+
+            <ion-item>
+              <ion-label>Location</ion-label>
+              <ion-input
+                formControlName="location"
+                type="text"
+                placeholder="Location"
+              ></ion-input>
+            </ion-item>
+            <ng-container
+              *ngIf="employee.controls['location'].invalid && addEmployeeForm.submitted"
+            >
+              <ion-text color="danger">
+                <p class="ion-padding-start">Age is required</p>
+              </ion-text>
+            </ng-container>
+
+            <ion-item>
+              <ion-label>Salary</ion-label>
+              <ion-input
+                formControlName="salary"
+                type="text"
+                placeholder="Enter Salary"
+              ></ion-input>
+            </ion-item>
+            <ng-container
+              *ngIf="employee.controls['salary'].invalid && addEmployeeForm.submitted"
+            >
+              <ion-text color="danger">
+                <p class="ion-padding-start">Salary is required</p>
+              </ion-text>
+            </ng-container>
+
+            <ion-item>
+              <ion-label>Position</ion-label>
+              <ion-input
+                formControlName="position"
+                type="text"
+                placeholder="Enter Position"
+              ></ion-input>
+            </ion-item>
+            <ng-container
+              *ngIf="employee.controls['position'].invalid && addEmployeeForm.submitted"
+            >
+              <ion-text color="danger">
+                <p class="ion-padding-start">Position is required</p>
+              </ion-text>
+            </ng-container>
+          </ion-list>
+
+          <ion-button type="submit" expand="block">Add Employee</ion-button>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ng-container *ngIf="(employees$ | async)?.length">
+    <ion-content>
+      <ion-list>
+        <ion-item *ngFor="let employee of employees$ | async">
+          <ion-label>
+            <h2>{{ employee.name }}</h2>
+            <p>{{ employee.age }}</p>
+            <p>{{ employee.location }}</p>
+            <p>{{ employee.salary }}</p>
+            <p>{{ employee.position }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-container>
+</ion-content>
