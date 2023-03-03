@@ -4,7 +4,7 @@ import { AppState } from './../state/app.state';
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { addEmployee } from '../state/employee.actions';
+import { addEmployee, deleteEmployee } from '../state/employee.actions';
 import { OverlayEventDetail } from '@ionic/core';
 
 @Component({
@@ -18,7 +18,6 @@ export class HomePage {
 
   employee: FormGroup;
   employees$ = this.store.select(selectAllEmployees);
-  showErrors = false;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -42,7 +41,6 @@ export class HomePage {
       this.modal.dismiss(null, 'confirm');
     }
 
-    this.showErrors = true;
     return;
   }
 
@@ -64,5 +62,9 @@ export class HomePage {
     }
 
     return;
+  }
+
+  removeEmployee(id: string) {
+    this.store.dispatch(deleteEmployee({ id }));
   }
 }

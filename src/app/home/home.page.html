@@ -45,7 +45,7 @@
               ></ion-input>
             </ion-item>
             <ng-container
-              *ngIf="employee.controls['name'].invalid && addEmployeeForm.submitted && showErrors"
+              *ngIf="employee.controls['name'].invalid && addEmployeeForm.submitted"
             >
               <ion-text color="danger">
                 <p class="ion-padding-start">Name is required</p>
@@ -125,8 +125,33 @@
 
   <ng-container *ngIf="(employees$ | async)?.length">
     <ion-content>
-      <ion-list>
-        <ion-item *ngFor="let employee of employees$ | async">
+      <div class="container">
+        <ion-card
+          color="primary"
+          *ngFor="let employee of employees$ | async"
+          [ngStyle]="{'width': 'fit-content', 'flex-direction': 'row'}"
+        >
+          <ion-card-header>
+            <ion-fab vertical="top" horizontal="end">
+              <ion-fab-button
+                color="danger"
+                (click)="removeEmployee(employee.id)"
+              >
+                <ion-icon name="remove"></ion-icon>
+              </ion-fab-button>
+            </ion-fab>
+            <ion-card-title>{{employee.name}}</ion-card-title>
+            <ion-card-subtitle>{{employee.age}}</ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-item color="primary">{{ employee.location }}</ion-item>
+            <ion-item color="primary"
+              >{{ employee.salary | currency:'USD':'symbol':'3.0'}}</ion-item
+            >
+            <ion-item color="primary">{{ employee.position }}</ion-item>
+          </ion-card-content>
+          <!-- <ion-item>
           <ion-label>
             <h2>{{ employee.name }}</h2>
             <p>{{ employee.age }}</p>
@@ -134,8 +159,9 @@
             <p>{{ employee.salary }}</p>
             <p>{{ employee.position }}</p>
           </ion-label>
-        </ion-item>
-      </ion-list>
+        </ion-item> -->
+        </ion-card>
+      </div>
     </ion-content>
   </ng-container>
 </ion-content>

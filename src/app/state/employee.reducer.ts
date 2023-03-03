@@ -7,7 +7,16 @@ export interface EmployeeState {
 }
 
 export const initialState: EmployeeState = {
-  employees: [],
+  employees: [
+    {
+      id: '1',
+      name: 'John Doe',
+      age: 25,
+      location: 'New York',
+      salary: 50000,
+      position: 'Software Engineer',
+    },
+  ],
 };
 
 export const employeeReducer = createReducer(
